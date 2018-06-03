@@ -1,0 +1,365 @@
+<style>
+    body {
+        line-height: 1.42;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .l-container {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        justify-content: center;
+        justify-items: center;
+    }
+
+    .fa-map-marker-alt {
+        width: 30px;
+        color: #6e6e6e;
+    }
+
+    .c-yell__title-bar .fa-map-marker-alt {
+        width: 10px;
+        color: white;
+        margin-left: 15px;
+    }
+
+    .c-yell {
+        width: 380px;
+        height: 530px;
+        overflow: hidden;
+        border-radius: 15px;
+        background-color: white;
+    }
+
+    .c-yell__title-bar {
+        background-color: #ff8663;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .c-yell__address {
+        color: white;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .c-yell__close-button {
+        margin-left: auto;
+        padding: 15px;
+        text-decoration: none;
+        font-size: 30px;
+        height: 20px;
+        width: 20px;
+        color: #AAAAAA;
+    }
+
+    .c-yell__close-icon {
+        height: 16px;
+        width: 16px;
+        -webkit-mask: url('./fonts/plus.svg');
+        mask: url('./fonts/plus.svg');
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        background-color: #FFFFFF;
+        transform: rotate3d(0, 0, 1, 45deg);
+    }
+
+    .c-form__wrapper {
+        padding: 15px;
+    }
+
+    .c-comments {
+        height: 120px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-bottom: solid thin #CCCCCC;
+        margin-bottom: 10px;
+    }
+
+    .c-comments__list {
+        margin-bottom: 10px;
+    }
+
+    .c-comment {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .c-comment__title {
+    }
+
+    .c-comment__name {
+        font-weight: 700;
+        color: #6f6f6f;
+    }
+
+    .c-comment__location {
+        color: #AAAAAA;
+    }
+
+    .c-comment__date {
+        color: #AAAAAA;
+    }
+
+    .c-comment__text {
+
+    }
+
+    .c-form {
+        font-size: 14px;
+    }
+
+    .c-form__title {
+        color: #ff8663;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .c-form__input {
+        height: 30px;
+        border-radius: 15px;
+        border: solid thin #cccccc;
+        margin: 5px auto;
+        width: 335px;
+        padding-left: 15px;
+    }
+
+    .c-form__input_textarea {
+        height: auto;
+        width: 330px;
+    }
+
+    .l-dialog {
+        display: flex;
+        flex-direction: column;
+        width: 60vw;
+        height: 80vh;
+        margin: auto;
+        border-radius: 12px;
+        background-color: #FFFFFF;
+        overflow: hidden;
+    }
+
+    .l-dialog__title-bar {
+        display: flex;
+        align-items: center;
+        padding-left: 12px;
+        font-weight: 600;
+        height: 45px;
+        background-color: #ff8663;
+        color: #FFF;
+    }
+
+    .l-dialog__search-bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        background-color: #f0f0f0;
+        height: 45px;
+    }
+
+    .c-input-wrapper {
+        flex: 1;
+        overflow: hidden;
+        border-radius: 12px;
+        font-size: 14px;
+        margin: 10px;
+    }
+
+    .c-input {
+        width: 100%;
+        border: none;
+        outline: none;
+        height: 24px;
+        padding-left: 10px;
+        border-radius: 12px;
+    }
+
+    .l-zone-wrapper {
+        display: flex;
+        height: auto;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .c-friends-zone {
+        flex: 1;
+        padding: 15px 0px 15px 15px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .c-friends-zone__title {
+        margin: 5px 0;
+    }
+
+    .c-friends__list {
+        display: block;
+        height: 100%;
+        overflow: auto;
+        flex-flow: wrap;
+        align-items: flex-start;
+    }
+
+    .c-friends__item {
+        display: flex;
+        width: 100%;
+        padding: 5px 0;
+        height: 46px;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .c-friends__item_hidden {
+        display: none;
+    }
+
+    .c-friends__item:hover {
+        background-color: #f0f0f0;
+    }
+
+    .c-friends__img-wrapper {
+        height: 44px;
+        width: 44px;
+        margin-left: 8px;
+        border-radius: 22px;
+        overflow: hidden;
+    }
+
+    .c-friends__img {
+        height: 100%;
+        width: 100%;
+    }
+
+    .c-friends__name {
+        margin-left: 15px;
+    }
+
+    .c-form__submit-bar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 45px;
+        background-color: #ffffff;
+        width: 100%;
+    }
+
+    .c-button {
+        text-decoration: none;
+        padding: 8px 15px;
+        background-color: #ff8663;
+        color: #FFF;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    /* Let's get this party started */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    /*::-webkit-scrollbar-track {*/
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
+    /*-webkit-border-radius: 10px;*/
+    /*border-radius: 10px;*/
+    /*}*/
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: rgba(250, 250, 250, 0.8);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(250, 250, 250, 0);
+    }
+
+    .l-map {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+    }
+
+    .l-map__widget {
+        height: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+    }
+
+
+</style>
+<div class="c-yell">
+    <div class="c-yell__title-bar">
+        <i class="fas fa-map-marker-alt"></i>
+        <span class="c-yell__address">г. Москва</span>
+        <a href="#" class="c-yell__close-button"></a>
+
+        <a href="#" class="c-yell__close-button">
+            <div class="c-yell__close-icon"></div>
+        </a>
+    </div>
+    <div class="c-form__wrapper">
+        <div class="c-comments">
+            <ul class="c-comments__list">
+                <li class="c-comment">
+                    <div class="c-comment__title">
+                        <span class="c-comment__name">Василий</span>
+                        <span class="c-comment__location">Burger King</span>
+                        <span class="c-comment__date">12.06.18</span>
+                    </div>
+                    <div class="c-comment__text">Смачный воппер!</div>
+                </li>
+                <li class="c-comment">
+                    <div class="c-comment__title">
+                        <span class="c-comment__name">Василий</span>
+                        <span class="c-comment__location">Burger King</span>
+                        <span class="c-comment__date">12.06.18</span>
+                    </div>
+                    <div class="c-comment__text">Смачный воппер!</div>
+                </li>
+                <li class="c-comment">
+                    <div class="c-comment__title">
+                        <span class="c-comment__name">Василий</span>
+                        <span class="c-comment__location">Burger King</span>
+                        <span class="c-comment__date">12.06.18</span>
+                    </div>
+                    <div class="c-comment__text">Смачный воппер!</div>
+                </li>
+            </ul>
+        </div>
+        <form action="" class="c-form" id="comment-form">
+            <div class="c-form__title">Ваш отзыв</div>
+            <input type="text" name="username" class="c-form__input" placeholder="Ваше имя"/>
+            <input type="text" name="location" class="c-form__input" placeholder="Укажите место"/>
+            <textarea rows="9" name="comment" class="c-form__input c-form__input_textarea"
+                      placeholder="Поделитесь впечатлениями">
+        </textarea>
+
+            <div class="c-form__submit-bar">
+                <a href="#" class="c-button" id="send-button">Добавить</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<div class="l-map">
+    <div class="l-map__widget" id="map"></div>
+</div>
