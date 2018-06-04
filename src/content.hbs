@@ -18,6 +18,7 @@
         height: 100vh;
         justify-content: center;
         justify-items: center;
+        position:relative;
     }
 
     .fa-map-marker-alt {
@@ -32,11 +33,19 @@
     }
 
     .c-yell {
+        position:absolute;
+        display:block;
+        left: 40px;
+        top: 40px;
         width: 380px;
         height: 530px;
         overflow: hidden;
         border-radius: 15px;
         background-color: white;
+        z-index: 1;
+    }
+    .c-yell_hidden {
+        display:none;
     }
 
     .c-yell__title-bar {
@@ -193,58 +202,58 @@
         overflow: hidden;
     }
 
-    .c-friends-zone {
-        flex: 1;
-        padding: 15px 0px 15px 15px;
-        font-size: 14px;
-        font-weight: 600;
-    }
+    /*.c-friends-zone {*/
+        /*flex: 1;*/
+        /*padding: 15px 0px 15px 15px;*/
+        /*font-size: 14px;*/
+        /*font-weight: 600;*/
+    /*}*/
 
-    .c-friends-zone__title {
-        margin: 5px 0;
-    }
+    /*.c-friends-zone__title {*/
+        /*margin: 5px 0;*/
+    /*}*/
 
-    .c-friends__list {
-        display: block;
-        height: 100%;
-        overflow: auto;
-        flex-flow: wrap;
-        align-items: flex-start;
-    }
+    /*.c-friends__list {*/
+        /*display: block;*/
+        /*height: 100%;
+        /*overflow: auto;*/
+        /*flex-flow: wrap;*/
+        /*align-items: flex-start;*/
+    /*}*/
 
-    .c-friends__item {
-        display: flex;
-        width: 100%;
-        padding: 5px 0;
-        height: 46px;
-        align-items: center;
-        justify-content: flex-end;
-    }
+    /*.c-friends__item {*/
+        /*display: flex;*/
+        /*width: 100%;*/
+        /*padding: 5px 0;*/
+        /*height: 46px;*/
+        /*align-items: center;*/
+        /*justify-content: flex-end;*/
+    /*}*/
 
-    .c-friends__item_hidden {
-        display: none;
-    }
+    /*.c-friends__item_hidden {*/
+        /*display: none;*/
+    /*}*/
 
-    .c-friends__item:hover {
-        background-color: #f0f0f0;
-    }
+    /*.c-friends__item:hover {*/
+        /*background-color: #f0f0f0;*/
+    /*}*/
 
-    .c-friends__img-wrapper {
-        height: 44px;
-        width: 44px;
-        margin-left: 8px;
-        border-radius: 22px;
-        overflow: hidden;
-    }
+    /*.c-friends__img-wrapper {*/
+        /*height: 44px;*/
+        /*width: 44px;*/
+        /*margin-left: 8px;*/
+        /*border-radius: 22px;*/
+        /*overflow: hidden;*/
+    /*}*/
 
-    .c-friends__img {
-        height: 100%;
-        width: 100%;
-    }
+    /*.c-friends__img {*/
+        /*height: 100%;*/
+        /*width: 100%;*/
+    /*}*/
 
-    .c-friends__name {
-        margin-left: 15px;
-    }
+    /*.c-friends__name {*/
+        /*margin-left: 15px;*/
+    /*}*/
 
     .c-form__submit-bar {
         display: flex;
@@ -305,58 +314,58 @@
 
 
 </style>
-<div class="c-yell">
-    <div class="c-yell__title-bar">
-        <i class="fas fa-map-marker-alt"></i>
-        <span class="c-yell__address">г. Москва</span>
-        <a href="#" class="c-yell__close-button"></a>
+<div class="c-yell c-yell_hidden" id="yell-balloon">
+    <!--<div class="c-yell__title-bar">-->
+        <!--<i class="fas fa-map-marker-alt"></i>-->
+        <!--<span class="c-yell__address">г. Москва</span>-->
+        <!--<a href="#" class="c-yell__close-button"></a>-->
 
-        <a href="#" class="c-yell__close-button">
-            <div class="c-yell__close-icon"></div>
-        </a>
-    </div>
-    <div class="c-form__wrapper">
-        <div class="c-comments">
-            <ul class="c-comments__list">
-                <li class="c-comment">
-                    <div class="c-comment__title">
-                        <span class="c-comment__name">Василий</span>
-                        <span class="c-comment__location">Burger King</span>
-                        <span class="c-comment__date">12.06.18</span>
-                    </div>
-                    <div class="c-comment__text">Смачный воппер!</div>
-                </li>
-                <li class="c-comment">
-                    <div class="c-comment__title">
-                        <span class="c-comment__name">Василий</span>
-                        <span class="c-comment__location">Burger King</span>
-                        <span class="c-comment__date">12.06.18</span>
-                    </div>
-                    <div class="c-comment__text">Смачный воппер!</div>
-                </li>
-                <li class="c-comment">
-                    <div class="c-comment__title">
-                        <span class="c-comment__name">Василий</span>
-                        <span class="c-comment__location">Burger King</span>
-                        <span class="c-comment__date">12.06.18</span>
-                    </div>
-                    <div class="c-comment__text">Смачный воппер!</div>
-                </li>
-            </ul>
-        </div>
-        <form action="" class="c-form" id="comment-form">
-            <div class="c-form__title">Ваш отзыв</div>
-            <input type="text" name="username" class="c-form__input" placeholder="Ваше имя"/>
-            <input type="text" name="location" class="c-form__input" placeholder="Укажите место"/>
-            <textarea rows="9" name="comment" class="c-form__input c-form__input_textarea"
-                      placeholder="Поделитесь впечатлениями">
-        </textarea>
+        <!--<a href="#" class="c-yell__close-button">-->
+            <!--<div class="c-yell__close-icon"></div>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="c-form__wrapper">-->
+        <!--<div class="c-comments">-->
+            <!--<ul class="c-comments__list">-->
+                <!--<li class="c-comment">-->
+                    <!--<div class="c-comment__title">-->
+                        <!--<span class="c-comment__name">Василий</span>-->
+                        <!--<span class="c-comment__location">Burger King</span>-->
+                        <!--<span class="c-comment__date">12.06.18</span>-->
+                    <!--</div>-->
+                    <!--<div class="c-comment__text">Смачный воппер!</div>-->
+                <!--</li>-->
+                <!--<li class="c-comment">-->
+                    <!--<div class="c-comment__title">-->
+                        <!--<span class="c-comment__name">Василий</span>-->
+                        <!--<span class="c-comment__location">Burger King</span>-->
+                        <!--<span class="c-comment__date">12.06.18</span>-->
+                    <!--</div>-->
+                    <!--<div class="c-comment__text">Смачный воппер!</div>-->
+                <!--</li>-->
+                <!--<li class="c-comment">-->
+                    <!--<div class="c-comment__title">-->
+                        <!--<span class="c-comment__name">Василий</span>-->
+                        <!--<span class="c-comment__location">Burger King</span>-->
+                        <!--<span class="c-comment__date">12.06.18</span>-->
+                    <!--</div>-->
+                    <!--<div class="c-comment__text">Смачный воппер!</div>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--<form action="" class="c-form" id="comment-form">-->
+            <!--<div class="c-form__title">Ваш отзыв</div>-->
+            <!--<input type="text" name="username" class="c-form__input" placeholder="Ваше имя"/>-->
+            <!--<input type="text" name="location" class="c-form__input" placeholder="Укажите место"/>-->
+            <!--<textarea rows="9" name="comment" class="c-form__input c-form__input_textarea"-->
+                      <!--placeholder="Поделитесь впечатлениями">-->
+        <!--</textarea>-->
 
-            <div class="c-form__submit-bar">
-                <a href="#" class="c-button" id="send-button">Добавить</a>
-            </div>
-        </form>
-    </div>
+            <!--<div class="c-form__submit-bar">-->
+                <!--<a href="#" class="c-button" id="send-button">Добавить</a>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
 
 </div>
 

@@ -2,9 +2,11 @@ import './foundation.js';
 import './foundation.css';
 
 const plus = require('./img/plus.svg');
-// const vkModule = require('./js/vk');
-// const filter = require('./js/filter');
 const yellTemplate = require('./yell-template.hbs');
+const Place = require('./js/place.js').place;
+const Comment = require('./js/place.js').comment;
+const placesMap = new Map();
+
 
 // const initialZone = document.querySelector('#initial-zone');
 // const filteredZone = document.querySelector('#filtered-zone');
@@ -19,38 +21,143 @@ const yellTemplate = require('./yell-template.hbs');
 
 let yMap;
 let clusterer;
-
+let geoObjects = [];
+const yellBalloon = document.querySelector('#yell-balloon');
 
 (async() => {
     try {
         await ymaps.ready();
-        yMap = new ymaps.Map('map', {
+
+        let yMap = new ymaps.Map('map', {
             center: [55.76, 37.64], // Москва
             zoom: 14
         }, {
             searchControlProvider: 'yandex#search'
         });
-        clusterer = new ymaps.Clusterer({
+
+        let clusterer = new ymaps.Clusterer({
             preset: 'islands#invertedBlackClusterIcons',
             clusterDisableClickZoom: true,
             openBalloonOnClick: false,
+            gridSize: 110,
             iconColor: '#6f6f6f'
         });
 
+
+        yMap.events.add('click', e => {
+            let coords = e.get('coords');
+
+            let placemark = createPlacemark(coords);
+            //console.dir(placemark);
+
+            placemark.events.add('click', showBaloon);
+            yMap.geoObjects.add(placemark);
+            geoObjects.push(placemark);
+            clusterer.add(geoObjects);
+            placemark.properties
+                .set(getAddress(coords));
+        });
+
+
         yMap.geoObjects.add(clusterer);
-var geoObjects=[];
-        geoObjects.push(new ymaps.Placemark([55.833436, 37.715175], {}, {
-                preset: 'islands#blackIcon',
-            }));
-        geoObjects.push(new ymaps.Placemark([55.833636, 37.715175], {}, {
-                preset: 'islands#blackIcon',
-            }));
-        clusterer.add(geoObjects);
+        // var geoObjects=[];
+        //     geoObjects.push(new ymaps.Placemark([55.833436, 37.715175], {}, {
+        //             preset: 'islands#blackIcon',
+        //         }));
+        //     geoObjects.push(new ymaps.Placemark([55.833636, 37.715175], {}, {
+        //             preset: 'islands#blackIcon',
+        //         }));
+        //     clusterer.add(geoObjects);
     }
     catch (e) {
         console.error(e);
     }
 })();
+
+
+async function showBaloon(e) {
+    const placemark = e.get('target');
+
+    if (!placemark) {
+        return;
+    }
+
+    const coords = placemark.geometry.getCoordinates();
+    const address = await getAddress(coords);
+    console.log(address);
+    let place;
+
+    if (placesMap.has(coords)) {
+        place = placesMap.get(coords);
+    }
+    else {
+        place = new Place(address, []);
+        placesMap.set(coords, place);
+    }
+
+
+    yellBalloon.innerHTML = '';
+    yellBalloon.classList.remove('c-yell_hidden');
+    yellBalloon.innerHTML = yellTemplate({
+        place: place
+    });
+
+    const closeButton = yellBalloon.querySelector('#close-button');
+    const sendButton = yellBalloon.querySelector('#send-button');
+
+    closeButton.addEventListener('click', e => {
+        yellBalloon.classList.add('c-yell_hidden');
+    });
+
+};
+
+function createPlacemark(coords) {
+    return new ymaps.Placemark(coords, {}, {
+        preset: 'islands#blackIcon',
+    });
+}
+
+function getAddress(coords) {
+    return ymaps.geocode(coords).then(function (res) {
+        let firstGeoObject = res.geoObjects.get(0);
+        return firstGeoObject.getAddressLine();
+    });
+}
+
+// function getAddress(coords) {
+//     ymaps.geocode(coords).then(function (res) {
+//         let firstGeoObject = res.geoObjects.get(0);
+//
+//         return {
+//             // Формируем строку с данными об объекте.
+//             iconCaption: [
+//                 // Название населенного пункта или вышестоящее административно-территориальное образование.
+//                 firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas(),
+//                 // Получаем путь до топонима, если метод вернул null, запрашиваем наименование здания.
+//                 firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
+//             ].filter(Boolean).join(', '),
+//             // В качестве контента балуна задаем строку с адресом объекта.
+//             balloonContent: firstGeoObject.getAddressLine()
+//         };
+//     });
+// }
+
+// function geocode(address) {
+//     if (cache.has(address)) {
+//         return Promise.resolve(cache.get(address));
+//     }
+//
+//     return ymaps.geocode(address)
+//         .then(result => {
+//             const points = result.geoObjects.toArray();
+//
+//             if (points.length) {
+//                 const coors = points[0].geometry.getCoordinates();
+//                 cache.set(address, coors);
+//                 return coors;
+//             }
+//         });
+// }
 
 
 // // map
