@@ -20,13 +20,17 @@ const showBalloon = async(coords, placesMap, yMap, clusterer, geoObjects) => {
     _yMap = yMap;
     _clusterer = clusterer;
     _geoObjects = geoObjects;
+    console.log(coords);
     _showBalloon(coords);
 };
 
 const _showBalloon = async(coords) => {
-    let places = _placesMap.has(coords) ? _placesMap.get(coords) : [];
+    const coordsHash = getCoordsHash(coords);
+    let places = _placesMap.has(coordsHash) ? _placesMap.get(coordsHash) : [];
     renderBalloon(coords, places);
 };
+
+const getCoordsHash = coords => coords[0].toString() + coords[1].toString();
 
 async function renderBalloon(coords, places) {
 
@@ -68,13 +72,13 @@ async function renderBalloon(coords, places) {
 
         placemark.properties.set({
             balloonContentHeader: place.location,
-            balloonContentBody: `<a href="" class="placemark__link">${place.address}</a>`,
-            balloonContentFooter: place.date
-        });
+            balloonContentBody: `<a href="" class="placemark__link" data-x="${coords[0]}" data-y="${coords[1]}">${place.address}</a>`,
+            balloonContentFooter: place.date,
+                    });
 
 
         places.push(place);
-        _placesMap.set(coords, places);
+        _placesMap.set(getCoordsHash(coords), places);
 
         nameInput.value = '';
         locationInput.value = '';
@@ -87,12 +91,22 @@ async function renderBalloon(coords, places) {
 const placemarkHandler = async e => {
     const placemark = e.get('target');
     const coords = placemark.geometry.getCoordinates();
-
     if (!placemark) {
         return;
     }
 
     await _showBalloon(coords);
 };
+
+document.addEventListener('click', e => {
+    e.preventDefault();
+    const target = e.target;
+    if (target.classList.contains('placemark__link')) {
+        const x = Number(target.dataset['x']);
+        const y = Number(target.dataset['y']);
+        _showBalloon([x, y]);
+    }
+
+});
 
 module.exports = showBalloon;

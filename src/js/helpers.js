@@ -1,6 +1,7 @@
 function createPlacemark(coords) {
     return new ymaps.Placemark(coords, {}, {
         preset: 'islands#blackIcon',
+        openBalloonOnClick: false,
     });
 }
 
@@ -17,8 +18,7 @@ function getMonth(date) {
 }
 
 function getDate(date) {
-    const day = date.getDate() ;
-    console.log(day);
+    const day = date.getDate();
     return day < 10 ? '0' + day : '' + day;
 }
 
