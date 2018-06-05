@@ -1,6 +1,6 @@
 <div class="c-yell__title-bar">
     <i class="fas fa-map-marker-alt"></i>
-    <span class="c-yell__address">{{place.address}}</span>
+    <span class="c-yell__address">{{address}}</span>
     <a href="#" class="c-yell__close-button" id="close-button">
         <div class="c-yell__close-icon"></div>
     </a>
@@ -8,7 +8,7 @@
 <div class="c-form__wrapper">
     <div class="c-comments">
         <ul class="c-comments__list">
-            {{#each place.comments}}
+            {{#each places}}
                 <li class="c-comment">
                     <div class="c-comment__title">
                         <span class="c-comment__name">{{name}}</span>

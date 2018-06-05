@@ -4,7 +4,7 @@ require('./foundation.css');
 const plus = require('./img/plus.svg');
 const yellTemplate = require('./yell-template.hbs');
 const Place = require('./js/place.js').place;
-const Comment = require('./js/place.js').comment;
+//const Comment = require('./js/place.js').comment;
 
 const yellBalloon = document.querySelector('#yell-balloon');
 
@@ -18,18 +18,19 @@ let yMap;
 let clusterer;
 let geoObjects = [];
 
+
 (async() => {
     try {
         await ymaps.ready();
 
-        let yMap = new ymaps.Map('map', {
+         yMap = new ymaps.Map('map', {
             center: [55.76, 37.64], // Москва
             zoom: 14
         }, {
             searchControlProvider: 'yandex#search'
         });
 
-        let clusterer = new ymaps.Clusterer({
+        clusterer = new ymaps.Clusterer({
             preset: 'islands#invertedBlackClusterIcons',
             clusterDisableClickZoom: true,
             openBalloonOnClick: false,
@@ -39,15 +40,15 @@ let geoObjects = [];
 
         yMap.events.add('click', e => {
             let coords = e.get('coords');
-            let placemark = createPlacemark(coords);
+            // let placemark = createPlacemark(coords);
+            //
+            // placemark.events.add('click', placemarkHandler);
+            // yMap.geoObjects.add(placemark);
+            // geoObjects.push(placemark);
+            //
+            // clusterer.add(geoObjects);
 
-            placemark.events.add('click', placemarkHandler);
-            yMap.geoObjects.add(placemark);
-            geoObjects.push(placemark);
-
-            clusterer.add(geoObjects);
-
-            showBaloon(placemark);
+            showBaloon(coords);
 
             // placemark.properties
             //     .set(getAddress(coords));
@@ -71,38 +72,43 @@ let geoObjects = [];
 
 const placemarkHandler = async e=> {
     const placemark = e.get('target');
+    const coords = placemark.geometry.getCoordinates();
 
     if (!placemark) {
         return;
     }
 
-    await showBaloon(placemark);
+    await showBaloon(coords);
 };
 
 
-const showBaloon = async placemark => {
+const showBaloon = async coords => {
 
-    const coords = placemark.geometry.getCoordinates();
+    let places = placesMap.has(coords) ? placesMap.get(coords): [];
+
+    // if (placesMap.has(coords)) {
+    //     places = placesMap.get(coords);
+    // }
+    // else {
+    //    //place = new Place(address, []);
+    //     //placesMap.set(coords, place);
+    //     places=[];
+    // }
+
+    renderBalloon(coords, places);
+};
+
+
+async function renderBalloon(coords, places) {
+
     const address = await getAddress(coords);
-    let place;
 
-    if (placesMap.has(coords)) {
-        place = placesMap.get(coords);
-    }
-    else {
-        place = new Place(address, []);
-        placesMap.set(coords, place);
-    }
-
-    renderBalloon(place);
-};
-
-
-function renderBalloon(place) {
+    //debugger;
     yellBalloon.innerHTML = '';
     yellBalloon.classList.remove('c-yell_hidden');
     yellBalloon.innerHTML = yellTemplate({
-        place: place
+        address:address,
+        places: places
     });
 
     const closeButton = yellBalloon.querySelector('#close-button');
@@ -119,14 +125,25 @@ function renderBalloon(place) {
         const date = new Date();
         let dateStr = `${getDate(date)}.${getMonth(date)}.${date.getFullYear()}`;
 
-        const comment = new Comment(nameInput.value, locationInput.value, dateStr, textInput.value);
-        place.addComment(comment);
+        //place.addComment(comment);
+
+        let placemark = createPlacemark(coords);
+
+        placemark.events.add('click', placemarkHandler);
+        yMap.geoObjects.add(placemark);
+        geoObjects.push(placemark);
+
+        clusterer.add(geoObjects);
+
+        const place  = new Place(address, nameInput.value, locationInput.value, dateStr, textInput.value, placemark);
+        places.push(place);
+        placesMap.set(coords, places);
 
         nameInput.value='';
         locationInput.value='';
         textInput.value='';
 
-        renderBalloon(place);
+        renderBalloon(coords, places);
     });
 }
 
