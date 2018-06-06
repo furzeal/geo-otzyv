@@ -5,6 +5,7 @@ let _placesMap,
 
 let closeButton;
 let sendButton;
+let activeClusterBalloon;
 
 const getAddress = require('./helpers.js').getAddress;
 const getMonth = require('./helpers.js').getMonth;
@@ -15,12 +16,16 @@ const Place = require('./place.js').place;
 
 const yellBalloon = document.querySelector('#yell-balloon');
 
-const showBalloon = async(coords, placesMap, yMap, clusterer, geoObjects) => {
+const balloonInit = async(coords, placesMap, yMap, clusterer, geoObjects) => {
     _placesMap = placesMap;
     _yMap = yMap;
     _clusterer = clusterer;
     _geoObjects = geoObjects;
-    console.log(coords);
+
+    _clusterer.events.add('balloonopen', e => {
+        get_cinema_schedule(e.get('target').id ? e.get('target').id : e.get('target').state.get('activeObject').id);
+    });
+
     _showBalloon(coords);
 };
 
@@ -74,7 +79,7 @@ async function renderBalloon(coords, places) {
             balloonContentHeader: place.location,
             balloonContentBody: `<a href="" class="placemark__link" data-x="${coords[0]}" data-y="${coords[1]}">${place.address}</a>`,
             balloonContentFooter: place.date,
-                    });
+        });
 
 
         places.push(place);
@@ -109,4 +114,4 @@ document.addEventListener('click', e => {
 
 });
 
-module.exports = showBalloon;
+module.exports = balloonInit;

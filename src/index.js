@@ -2,9 +2,8 @@ require('./foundation.js');
 require('./foundation.css');
 
 const plus = require('./img/plus.svg');
-const showBalloon = require('./js/balloon.js');
+const balloonInit = require('./js/balloon.js');
 //const Comment = require('./js/place.js').comment;
-
 
 let placesMap = new Map();
 let yMap;
@@ -23,7 +22,7 @@ let geoObjects = [];
         });
 
         // Создаем собственный макет с информацией о выбранном геообъекте.
-        var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
+        let customItemContentLayout = ymaps.templateLayoutFactory.createClass(
             // Флаг "raw" означает, что данные вставляют "как есть" без экранирования html.
             '<h2 class=ballon_header>{{ properties.balloonContentHeader|raw }}</h2>' +
             '<div class=ballon_body>{{ properties.balloonContentBody|raw }}</div>' +
@@ -62,8 +61,7 @@ let geoObjects = [];
         yMap.events.add('click', e => {
             let coords = e.get('coords');
 
-            showBalloon(coords, placesMap, yMap, clusterer, geoObjects);
-
+            balloonInit(coords, placesMap, yMap, clusterer, geoObjects);
             // placemark.properties
             //     .set(getAddress(coords));
         });
