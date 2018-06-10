@@ -23,7 +23,8 @@ const balloonInit = async(coords, placesMap, yMap, clusterer, geoObjects) => {
     _geoObjects = geoObjects;
 
     _clusterer.events.add('balloonopen', e => {
-        get_cinema_schedule(e.get('target').id ? e.get('target').id : e.get('target').state.get('activeObject').id);
+        console.dir(e.get('target'), e.get('target').balloon);
+        activeClusterBalloon = e.get('target')
     });
 
     _showBalloon(coords);
@@ -39,6 +40,10 @@ const getCoordsHash = coords => coords[0].toString() + coords[1].toString();
 
 async function renderBalloon(coords, places) {
 
+    if (activeClusterBalloon) {
+        activeClusterBalloon.close();
+        activeClusterBalloon = null;
+    }
     const address = await getAddress(coords);
 
     yellBalloon.innerHTML = '';
