@@ -41,7 +41,6 @@ async function renderBalloon(coords, places) {
 
     const address = await getAddress(coords);
 
-    //debugger;
     yellBalloon.innerHTML = '';
     yellBalloon.classList.remove('c-yell_hidden');
     yellBalloon.innerHTML = yellTemplate({
@@ -62,8 +61,6 @@ async function renderBalloon(coords, places) {
         const textInput = yellBalloon.querySelector('#comment-text');
         const date = new Date();
         let dateStr = `${getDate(date)}.${getMonth(date)}.${date.getFullYear()}`;
-
-        //place.addComment(comment);
 
         let placemark = createPlacemark(coords);
 
